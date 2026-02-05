@@ -37,7 +37,13 @@ export default function Navbar() {
       ],
     },
     { name: "Announcements", path: "/announcements" },
-    { name: "Downloads", path: "/downloads" },
+    {
+      name: "CE Files",
+      children: [
+        { name: "CE Library", path: "/ce-library" },
+        { name: "Downloads", path: "/downloads" },
+      ],
+    },
     { name: "FAQs", path: "/faqs" },
   ]
 

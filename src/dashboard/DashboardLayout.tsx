@@ -12,7 +12,10 @@ import {
   UserRoundPen,
   NotepadText,
   Network,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
+import { useState } from "react";
 import axios from "axios";
 import logo from "../assets/pice-logo.png";
 export default function DashboardLayout() {
@@ -24,6 +27,8 @@ export default function DashboardLayout() {
     window.location.href = "/login";
   };
 
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+
   const menu = [
     {
       label: "Dashboard",
@@ -31,21 +36,30 @@ export default function DashboardLayout() {
       icon: <LayoutDashboard size={18} />,
     },
     {
-      label: "President CMS",
+      label: "Office of the President",
       to: "/dashboard/president",
       icon: <UserStar size={18} />,
     },
     {
-      label: "Chairman CMS",
+      label: "Office of the Chairman",
       to: "/dashboard/chairman",
       icon: <UserRoundPen size={18} />,
     },
     {
-      label: "Officer CMS",
+      label: "Organization Officer",
       to: "/dashboard/officers",
       icon: <Network size={18} />,
     },
     { label: "CBL Upload", to: "/dashboard/cbl", icon: <FileText size={18} /> },
+    {
+      label: "Admin & Finance",
+      to: "/dashboard/admin-finance",
+      icon: <FileText size={18} />,
+      submenu: [
+        { label: "Action Plan", to: "/dashboard/action-plan" },
+        { label: "Financial Report", to: "/dashboard/financial" },
+      ],
+    },
     {
       label: "Accomplishments",
       to: "/dashboard/accomplishments",
@@ -56,6 +70,12 @@ export default function DashboardLayout() {
       to: "/dashboard/announcements",
       icon: <Megaphone size={18} />,
     },
+    {
+      label: "CE Library",
+      to: "/dashboard/ce",
+      icon: <FileText size={18} />,
+    },
+
     {
       label: "Downloads",
       to: "/dashboard/downloads",
@@ -76,24 +96,76 @@ export default function DashboardLayout() {
 
         {/* Menu */}
         <nav className="flex-1 p-4 space-y-1">
-          {menu.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === "/dashboard"}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-2 rounded-lg transition
-                ${
-                  isActive
-                    ? "bg-pice-gold text-pice-navy font-semibold shadow"
-                    : "text-white/80 hover:bg-white/10 hover:text-white"
-                }`
-              }
-            >
-              {item.icon}
-              {item.label}
-            </NavLink>
-          ))}
+          {menu.map((item) =>
+            item.submenu ? (
+              <div key={item.label} className="space-y-1">
+                <div
+                  className={`flex items-center gap-3 px-4 py-2 rounded-lg transition cursor-pointer
+            text-white/80 hover:bg-white/10 hover:text-white`}
+                >
+                  <div className="flex-1 flex items-center gap-3">
+                    {item.icon}
+                    <span className="flex-1">{item.label}</span>
+                  </div>
+
+                  <button
+                    onClick={() =>
+                      setExpandedMenu(
+                        expandedMenu === item.label ? null : item.label,
+                      )
+                    }
+                    aria-expanded={expandedMenu === item.label}
+                    className="p-1 rounded hover:bg-white/10"
+                    title="Toggle submenu"
+                  >
+                    {expandedMenu === item.label ? (
+                      <ChevronUp size={16} />
+                    ) : (
+                      <ChevronDown size={16} />
+                    )}
+                  </button>
+                </div>
+
+                {expandedMenu === item.label && (
+                  <div className="pl-12 pr-4 flex flex-col gap-1">
+                    {item.submenu.map((sub) => (
+                      <NavLink
+                        key={sub.to}
+                        to={sub.to}
+                        className={({ isActive }) =>
+                          `px-3 py-2 rounded-lg text-sm transition
+                  ${
+                    isActive
+                      ? "bg-pice-gold text-pice-navy font-semibold shadow"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                  }`
+                        }
+                      >
+                        {sub.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === "/dashboard"}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-2 rounded-lg transition
+          ${
+            isActive
+              ? "bg-pice-gold text-pice-navy font-semibold shadow"
+              : "text-white/80 hover:bg-white/10 hover:text-white"
+          }`
+                }
+              >
+                {item.icon}
+                {item.label}
+              </NavLink>
+            ),
+          )}
         </nav>
 
         <div className="absolute inset-0 opacity-5 pointer-events-none">
@@ -149,8 +221,7 @@ export default function DashboardLayout() {
 
         {/* Page Content */}
         <main className="flex-1 h-0 min-h-0 overflow-y-auto p-8">
-          
-            <Outlet />
+          <Outlet />
         </main>
       </div>
     </div>
