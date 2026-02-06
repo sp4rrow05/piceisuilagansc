@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
 
 type CBL = {
@@ -16,8 +16,8 @@ export default function CblUpload() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=cbl&action=read",
+        const res = await api.get(
+          "/?module=cbl&action=read",
           { withCredentials: true }
         )
 
@@ -48,8 +48,8 @@ export default function CblUpload() {
     formData.append("file", file)
 
     try {
-      const res = await axios.post(
-        "/pice-backend/api/?module=cbl&action=update",
+      const res = await api.post(
+        "/?module=cbl&action=update",
         formData,
         { withCredentials: true }
       )
@@ -58,8 +58,8 @@ export default function CblUpload() {
         Swal.fire("Success", "CBL uploaded", "success")
 
         // reload current
-        const fresh = await axios.get(
-          "/pice-backend/api/?module=cbl&action=read",
+        const fresh = await api.get(
+          "/?module=cbl&action=read",
           { withCredentials: true }
         )
 
@@ -82,8 +82,8 @@ export default function CblUpload() {
     if (!confirm.isConfirmed) return
 
     try {
-      await axios.get(
-        "/pice-backend/api/?module=cbl&action=delete",
+      await api.get(
+        "/?module=cbl&action=delete",
         { withCredentials: true }
       )
 

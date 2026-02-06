@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
-
+import api from "../../services/api";
+import { UPLOADS_URL } from "../../services/api";
 export default function FinancialReport() {
   const [file, setFile] = useState("")
 
   useEffect(() => {
-    axios.get("/pice-backend/api/?module=financial&action=read")
+    api.get("/?module=financial&action=read")
       .then(res => setFile(res.data.file))
   }, [])
 
@@ -15,7 +15,7 @@ export default function FinancialReport() {
 
     {file ? (
       <iframe
-        src={`/pice-backend/uploads/financial/${file}`}
+        src={`${UPLOADS_URL}/financial/${file}`}
         className="w-full h-[80vh] border"
       />
     ) : "No Financial Report uploaded"}

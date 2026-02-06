@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
+import { UPLOADS_URL } from "../../services/api";
 
 type CBL = {
   id: number | null
@@ -14,8 +15,8 @@ export default function CBL() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=cbl&action=read"
+        const res = await api.get(
+          "/?module=cbl&action=read"
         )
 
         setData(res.data)
@@ -47,7 +48,7 @@ export default function CBL() {
     )
   }
 
-  const fileUrl = `/pice-backend/uploads/cbl/${data.file}`
+  const fileUrl = `${UPLOADS_URL}/cbl/${data.file}`
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 space-y-6">

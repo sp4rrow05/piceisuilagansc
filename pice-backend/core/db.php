@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
-$db   = "pice_db";
-$user = "root";
-$pass = "";
+$host = "http://145.79.26.201";
+$db   = "u329369565_pice_db";
+$user = "u329369565_piceisuadmin";
+$pass = "@Sp4rrow05#";
 
 try {
   $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);

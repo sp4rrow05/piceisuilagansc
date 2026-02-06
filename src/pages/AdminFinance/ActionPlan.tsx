@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
+import { UPLOADS_URL } from "../../services/api";
 
 export default function ActionPlan() {
 
   const [file, setFile] = useState<string>("")
 
   useEffect(() => {
-    axios
-      .get("/pice-backend/api/?module=actionplan&action=read")
+    api
+      .get("/?module=actionplan&action=read")
       .then(res => setFile(res.data.file || ""))
   }, [])
 
@@ -38,7 +39,7 @@ export default function ActionPlan() {
         </div> */}
 
         <iframe
-          src={`/pice-backend/uploads/actionplan/${file}`}
+          src={`${UPLOADS_URL}/actionplan/${file}`}
           className="w-full h-[85vh] border rounded"
         />
 

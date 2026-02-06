@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
+import { UPLOADS_URL } from "../../services/api";
 
 type Category = "projects_programs" | "events"
 
@@ -41,8 +42,8 @@ export default function AccomplishmentList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=accomplishments&action=read"
+        const res = await api.get(
+          "/?module=accomplishments&action=read"
         )
         setData(res.data)
       } catch {
@@ -54,8 +55,8 @@ export default function AccomplishmentList() {
 
   const refreshData = async () => {
     try {
-      const res = await axios.get(
-        "/pice-backend/api/?module=accomplishments&action=read"
+      const res = await api.get(
+        "/?module=accomplishments&action=read"
       )
       setData(res.data)
     } catch {
@@ -99,8 +100,8 @@ export default function AccomplishmentList() {
   // Open EDIT modal
   const openEditModal = async (id: number) => {
     try {
-      const res = await axios.get(
-        `/pice-backend/api/?module=accomplishments&action=get&id=${id}`
+      const res = await api.get(
+        `/?module=accomplishments&action=get&id=${id}`
       )
 
       setEditingId(id)
@@ -130,8 +131,8 @@ export default function AccomplishmentList() {
     if (!result.isConfirmed) return
 
     try {
-      await axios.get(
-        `/pice-backend/api/?module=accomplishments&action=delete&id=${id}`
+      await api.get(
+        `/?module=accomplishments&action=delete&id=${id}`
       )
       await refreshData()
       Swal.fire("Deleted!", "Record deleted successfully.", "success")
@@ -153,8 +154,8 @@ export default function AccomplishmentList() {
 
     try {
       if (editingId === null) {
-        await axios.post(
-          "/pice-backend/api/?module=accomplishments&action=create",
+        await api.post(
+          "/?module=accomplishments&action=create",
           formData
         )
         Swal.fire({ icon: "success", title: "Added!", timer: 1200, showConfirmButton: false })
@@ -162,8 +163,8 @@ export default function AccomplishmentList() {
         formData.append("id", editingId.toString())
         formData.append("oldImage", oldImage)
 
-        await axios.post(
-          "/pice-backend/api/?module=accomplishments&action=update",
+        await api.post(
+          "/?module=accomplishments&action=update",
           formData
         )
         Swal.fire({ icon: "success", title: "Updated!", timer: 1200, showConfirmButton: false })
@@ -245,7 +246,7 @@ export default function AccomplishmentList() {
                 <tr key={item.id} className="border-t hover:bg-gray-50 transition">
                   <td className="px-4 py-3">
                     <img
-                      src={`/pice-backend/uploads/accomplishments/${item.image}`}
+                      src={`${UPLOADS_URL}/accomplishments/${item.image}`}
                       className="w-16 h-12 object-cover rounded cursor-zoom-in"
                       onClick={() =>
                         setPreviewImage(
@@ -331,7 +332,7 @@ export default function AccomplishmentList() {
                 <div>
                   <p className="text-sm text-gray-500 mb-1">Current Image (click to view)</p>
                   <img
-                    src={`/pice-backend/uploads/accomplishments/${oldImage}`}
+                    src={`${UPLOADS_URL}/accomplishments/${oldImage}`}
                     className="w-full h-40 object-cover rounded cursor-zoom-in"
                     onClick={() =>
                       setPreviewImage(

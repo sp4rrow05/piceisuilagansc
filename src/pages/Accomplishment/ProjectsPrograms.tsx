@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import AccomplishmentModal from "../../components/AccomplishmentModal"
+import { UPLOADS_URL } from "../../services/api";
+
 export default function ProjectsPrograms() {
   const [list, setList] = useState<any[]>([])
   const [selected, setSelected] = useState<any | null>(null)
 
   useEffect(() => {
-    axios
-      .get("/pice-backend/api/?module=accomplishments&action=read")
+    api
+      .get("/?module=accomplishments&action=read")
       .then(res => {
         const all = Array.isArray(res.data) ? res.data : []
         setList(all.filter((i: any) => i.category === "projects_programs"))
@@ -29,7 +31,7 @@ export default function ProjectsPrograms() {
             className="card hover:shadow cursor-pointer"
           >
             <img
-              src={`/pice-backend/uploads/accomplishments/${i.image}`}
+              src={`${UPLOADS_URL}/accomplishments/${i.image}`}
               className="h-40 w-full object-cover"
             />
 

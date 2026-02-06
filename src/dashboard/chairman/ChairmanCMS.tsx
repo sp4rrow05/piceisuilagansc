@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
-
+import { UPLOADS_URL } from "../../services/api";
 export default function ChairmanCMS() {
 
   const [cover, setCover] = useState("")
@@ -18,8 +18,8 @@ export default function ChairmanCMS() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=chairman&action=read"
+        const res = await api.get(
+          "/?module=chairman&action=read"
         )
 
         setCover(res.data.page?.cover_image || "")
@@ -37,8 +37,8 @@ export default function ChairmanCMS() {
   // reusable refresh
   const reload = async () => {
     try {
-      const res = await axios.get(
-        "/pice-backend/api/?module=chairman&action=read"
+      const res = await api.get(
+        "/?module=chairman&action=read"
       )
 
       setCover(res.data.page?.cover_image || "")
@@ -60,8 +60,8 @@ export default function ChairmanCMS() {
     fd.append("image", file)
 
     try {
-      await axios.post(
-        "/pice-backend/api/?module=chairman&action=cover_update",
+      await api.post(
+        "/?module=chairman&action=cover_update",
         fd,
         { withCredentials: true }
       )
@@ -88,14 +88,14 @@ export default function ChairmanCMS() {
       if (editing) {
         fd.append("id", editing.toString())
 
-        await axios.post(
-          "/pice-backend/api/?module=chairman&action=section_update",
+        await api.post(
+          "/?module=chairman&action=section_update",
           fd,
           { withCredentials: true }
         )
       } else {
-        await axios.post(
-          "/pice-backend/api/?module=chairman&action=section_create",
+        await api.post(
+          "/?module=chairman&action=section_create",
           fd,
           { withCredentials: true }
         )
@@ -128,8 +128,8 @@ export default function ChairmanCMS() {
   // ─────────────────────────────────────────────
   const del = async (id: number) => {
     try {
-      await axios.get(
-        `/pice-backend/api/?module=chairman&action=section_delete&id=${id}`,
+      await api.get(
+        `/?module=chairman&action=section_delete&id=${id}`,
         { withCredentials: true }
       )
 
@@ -157,7 +157,7 @@ export default function ChairmanCMS() {
 
         {cover && (
           <img
-            src={`/pice-backend/uploads/chairman/${cover}`}
+            src={`${UPLOADS_URL}/chairman/${cover}`}
             className="w-full h-60 object-cover mb-3 rounded"
           />
         )}

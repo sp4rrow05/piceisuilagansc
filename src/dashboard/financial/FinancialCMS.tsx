@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
+import { UPLOADS_URL } from "../../services/api";
 
 export default function FinancialCMS() {
   const [file, setFile] = useState("")
 
   const load = async () => {
-    const res = await axios.get("/pice-backend/api/?module=financial&action=read")
+    const res = await api.get("/?module=financial&action=read")
     setFile(res.data.file || "")
   }
 
@@ -16,8 +17,8 @@ export default function FinancialCMS() {
     const fd = new FormData()
     fd.append("file", e.target.files[0])
 
-    await axios.post(
-      "/pice-backend/api/?module=financial&action=update",
+    await api.post(
+      "/?module=financial&action=update",
       fd,
       { withCredentials:true }
     )
@@ -33,7 +34,7 @@ export default function FinancialCMS() {
     <div className="card p-4">
       {file ? (
         <iframe
-          src={`/pice-backend/uploads/financial/${file}`}
+          src={`${UPLOADS_URL}/financial/${file}`}
           className="w-full h-[70vh]"
         />
       ) : "No report uploaded"}

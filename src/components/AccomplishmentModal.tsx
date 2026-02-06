@@ -1,3 +1,4 @@
+import { UPLOADS_URL } from "../services/api";
 interface AccomplishmentModalProps {
     item: {
         image: string;
@@ -19,7 +20,7 @@ export default function AccomplishmentModal({ item, onClose }: AccomplishmentMod
             onClick={e => e.stopPropagation()}
             >
             <img
-                src={`/pice-backend/uploads/accomplishments/${item.image}`}
+                src={`${UPLOADS_URL}/accomplishments/${item.image}`}
                 className="w-full h-64 object-cover"
             />
 

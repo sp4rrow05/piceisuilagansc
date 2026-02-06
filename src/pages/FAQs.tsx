@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../services/api";
 
 type FAQ = {
   id: number
@@ -20,7 +20,7 @@ export default function FAQs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/pice-backend/api/?module=faqs&action=read")
+        const res = await api.get("/?module=faqs&action=read")
         setData(res.data)
         localStorage.setItem("faqs_cache", JSON.stringify(res.data))
       } catch (err) {

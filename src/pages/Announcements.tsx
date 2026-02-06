@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../services/api";
 
 export default function Announcements() {
   const [list, setList] = useState<any[]>([])
   const [selected, setSelected] = useState<any | null>(null)
 
   useEffect(() => {
-    axios
-      .get("/pice-backend/api/?module=announcements&action=read")
+    api
+      .get("/?module=announcements&action=read")
       .then(res => setList(Array.isArray(res.data) ? res.data : []))
   }, [])
 

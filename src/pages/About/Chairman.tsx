@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
+import { UPLOADS_URL } from "../../services/api";
 
 export default function Chairman() {
 
@@ -8,7 +9,7 @@ export default function Chairman() {
   const [sections, setSections] = useState<any[]>([])
 
   useEffect(() => {
-    axios.get("/pice-backend/api/?module=chairman&action=read")
+    api.get("/?module=chairman&action=read")
       .then(res => {
         setCover(res.data.page?.cover_image || "")
         setSections(res.data.sections || [])
@@ -24,7 +25,7 @@ export default function Chairman() {
 
     {cover && (
       <img
-        src={`/pice-backend/uploads/chairman/${cover}`}
+        src={`${UPLOADS_URL}/chairman/${cover}`}
         className="w-full rounded shadow"
       />
     )}

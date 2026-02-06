@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../services/api";
 
 type Log = {
   id: number
@@ -13,8 +13,8 @@ export default function LoginLogs() {
   const [data, setData] = useState<Log[]>([])
 
   useEffect(() => {
-    axios
-      .get("/pice-backend/api/?module=auth&action=logs", {
+    api
+      .get("/?module=auth&action=logs", {
         withCredentials: true,
       })
       .then(res => setData(res.data))

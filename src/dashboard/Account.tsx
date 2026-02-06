@@ -1,5 +1,5 @@
 import { useState } from "react"
-import axios from "axios"
+import api from "../services/api";
 import Swal from "sweetalert2"
 
 export default function Account() {
@@ -10,8 +10,8 @@ export default function Account() {
     e.preventDefault()
 
   
-    const res = await axios.post(
-      "/pice-backend/api/?module=auth&action=change_password",
+    const res = await api.post(
+      "/?module=auth&action=change_password",
       new URLSearchParams({
         oldPassword,
         newPassword

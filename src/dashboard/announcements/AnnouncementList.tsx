@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
 
 type Announcement = {
@@ -28,8 +28,8 @@ export default function AnnouncementList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=announcements&action=read"
+        const res = await api.get(
+          "/?module=announcements&action=read"
         )
         setData(res.data)
       } catch {
@@ -41,8 +41,8 @@ export default function AnnouncementList() {
 
   const refreshData = async () => {
     try {
-      const res = await axios.get(
-        "/pice-backend/api/?module=announcements&action=read"
+      const res = await api.get(
+        "/?module=announcements&action=read"
       )
       setData(res.data)
     } catch {
@@ -77,8 +77,8 @@ export default function AnnouncementList() {
   // Open EDIT modal
   const openEditModal = async (id: number) => {
     try {
-      const res = await axios.get(
-        `/pice-backend/api/?module=announcements&action=get&id=${id}`
+      const res = await api.get(
+        `/?module=announcements&action=get&id=${id}`
       )
 
       setEditingId(id)
@@ -104,8 +104,8 @@ export default function AnnouncementList() {
     if (!result.isConfirmed) return
 
     try {
-      await axios.get(
-        `/pice-backend/api/?module=announcements&action=delete&id=${id}`
+      await api.get(
+        `/?module=announcements&action=delete&id=${id}`
       )
       await refreshData()
       Swal.fire("Deleted!", "Announcement deleted.", "success")
@@ -124,15 +124,15 @@ export default function AnnouncementList() {
 
     try {
       if (editingId === null) {
-        await axios.post(
-          "/pice-backend/api/?module=announcements&action=create",
+        await api.post(
+          "/?module=announcements&action=create",
           formData
         )
         Swal.fire({ icon: "success", title: "Added!", timer: 1200, showConfirmButton: false })
       } else {
         formData.append("id", editingId.toString())
-        await axios.post(
-          "/pice-backend/api/?module=announcements&action=update",
+        await api.post(
+          "/?module=announcements&action=update",
           formData
         )
         Swal.fire({ icon: "success", title: "Updated!", timer: 1200, showConfirmButton: false })

@@ -16,11 +16,11 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import logo from "../assets/pice-logo.png";
 export default function DashboardLayout() {
   const logout = async () => {
-    await axios.get("/pice-backend/api/?module=auth&action=logout", {
+    await api.get("/?module=auth&action=logout", {
       withCredentials: true,
     });
 

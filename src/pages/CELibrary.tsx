@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../services/api";
+import { UPLOADS_URL } from "../services/api";
+
 
 type Folder = {
   id: number
@@ -29,14 +31,14 @@ export default function CELibrary() {
   const openFolder = async (id: number | null) => {
     setCurrent(id)
 
-    const f = await axios.get(`/pice-backend/api/?module=ce&action=folders&parent_id=${id ?? ""}`)
-    const fi = await axios.get(`/pice-backend/api/?module=ce&action=files&folder_id=${id ?? ""}`)
+    const f = await api.get(`/?module=ce&action=folders&parent_id=${id ?? ""}`)
+    const fi = await api.get(`/?module=ce&action=files&folder_id=${id ?? ""}`)
 
     setFolders(Array.isArray(f.data) ? f.data : [])
     setFiles(Array.isArray(fi.data) ? fi.data : [])
 
     // load breadcrumb path
-    const bc = await axios.get(`/pice-backend/api/?module=ce&action=breadcrumb&id=${id ?? ""}`)
+    const bc = await api.get(`/?module=ce&action=breadcrumb&id=${id ?? ""}`)
     setBreadcrumb(Array.isArray(bc.data) ? bc.data : [])
   }
 
@@ -103,7 +105,7 @@ export default function CELibrary() {
           <span>{f.title}</span>
 
           <a
-            href={`/pice-backend/uploads/ce_library/${f.filename}`}
+            href={`${UPLOADS_URL}/ce_library/${f.filename}`}
             target="_blank"
             className="text-blue-600"
           >

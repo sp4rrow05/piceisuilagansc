@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 import Swal from "sweetalert2";
+import { UPLOADS_URL } from "../../services/api";
 
 type Category = "forms" | "reports" | "others";
 
@@ -35,8 +36,8 @@ export default function DownloadList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=downloads&action=read",
+        const res = await api.get(
+          "/?module=downloads&action=read",
         );
         setData(Array.isArray(res.data) ? res.data : []);
       } catch {
@@ -50,8 +51,8 @@ export default function DownloadList() {
   // Reusable refresh
   const refreshData = async () => {
     try {
-      const res = await axios.get(
-        "/pice-backend/api/?module=downloads&action=read",
+      const res = await api.get(
+        "/?module=downloads&action=read",
       );
       setData(Array.isArray(res.data) ? res.data : []);
     } catch {
@@ -87,8 +88,8 @@ export default function DownloadList() {
 
   const openEditModal = async (id: number) => {
     try {
-      const res = await axios.get(
-        `/pice-backend/api/?module=downloads&action=get&id=${id}`,
+      const res = await api.get(
+        `/?module=downloads&action=get&id=${id}`,
       );
 
       setEditingId(id);
@@ -116,8 +117,8 @@ export default function DownloadList() {
     if (!result.isConfirmed) return;
 
     try {
-      await axios.get(
-        `/pice-backend/api/?module=downloads&action=delete&id=${id}`,
+      await api.get(
+        `/?module=downloads&action=delete&id=${id}`,
         { withCredentials: true }
       );
       await refreshData();
@@ -138,8 +139,8 @@ export default function DownloadList() {
 
     try {
       if (editingId === null) {
-        await axios.post(
-          "/pice-backend/api/?module=downloads&action=create",
+        await api.post(
+          "/?module=downloads&action=create",
           formData,{ withCredentials: true }
         );
         Swal.fire({
@@ -152,8 +153,8 @@ export default function DownloadList() {
         formData.append("id", editingId.toString());
         formData.append("oldFile", oldFile);
 
-        await axios.post(
-          "/pice-backend/api/?module=downloads&action=update",
+        await api.post(
+          "/?module=downloads&action=update",
           formData,{ withCredentials: true }
         );
         Swal.fire({
@@ -345,7 +346,7 @@ export default function DownloadList() {
             <div className="h-full">
               {(() => {
                 const fileUrl = encodeURI(
-                  `/pice-backend/uploads/downloads/${previewFile.file}`,
+                  `${UPLOADS_URL}/downloads/${previewFile.file}`,
                 );
 
                 const ext = previewFile.file.split(".").pop()?.toLowerCase();

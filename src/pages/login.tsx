@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Eye, EyeOff, User, Lock } from "lucide-react";
 import { useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -28,8 +28,8 @@ export default function Login() {
       formData.append("username", username)
       formData.append("password", password)
 
-      const res = await axios.post(
-        "/pice-backend/api/?module=auth&action=login",
+      const res = await api.post(
+        "/?module=auth&action=login",
         formData,
         { withCredentials: true }
       )

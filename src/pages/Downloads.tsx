@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
-import axios from "axios"
-
+import api from "../services/api";
+import { UPLOADS_URL } from "../services/api";
 export default function Downloads() {
   const [data, setData] = useState<any[]>([])
 
   useEffect(() => {
-    axios.get("/pice-backend/api/?module=downloads&action=read").then(res => {
+    api.get("/?module=downloads&action=read").then(res => {
       setData(res.data)
     })
   }, [])
@@ -20,7 +20,7 @@ export default function Downloads() {
           <div key={item.id} className="bg-white p-4 rounded shadow flex justify-between items-center">
             <span>{item.title}</span>
             <a
-              href={`/pice-backend/uploads/downloads/${item.file}`}
+              href={`${UPLOADS_URL}/downloads/${item.file}`}
               target="_blank"
               className="bg-pice-navy text-white px-4 py-2 rounded"
             >

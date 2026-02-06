@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../services/api";
 import { Link } from "react-router-dom"
 import Slider from "../components/Slider"
 import DetailModal from "../components/DetailModal"
+import { UPLOADS_URL } from "../services/api";
+
 
 export default function Home() {
 
@@ -14,8 +16,8 @@ export default function Home() {
   useEffect(() => {
     const load = async () => {
       try {
-        const acc = await axios.get("/pice-backend/api/?module=accomplishments&action=read")
-        const ann = await axios.get("/pice-backend/api/?module=announcements&action=read")
+        const acc = await api.get("/?module=accomplishments&action=read")
+        const ann = await api.get("/?module=announcements&action=read")
 
         setAccomplishments(Array.isArray(acc.data) ? acc.data.slice(0,3) : [])
         setAnnouncements(Array.isArray(ann.data) ? ann.data.slice(0,3) : [])
@@ -54,13 +56,13 @@ export default function Home() {
             className="bg-white rounded shadow overflow-hidden cursor-pointer hover:shadow-lg transition"
             onClick={() => setSelected({
               title: item.title,
-              image: `/pice-backend/uploads/accomplishments/${item.image}`,
+              image: `${UPLOADS_URL}/accomplishments/${item.image}`,
               content: item.description
             })}
           >
 
             <img
-              src={`/pice-backend/uploads/accomplishments/${item.image}`}
+              src={`${UPLOADS_URL}/accomplishments/${item.image}`}
               className="h-40 w-full object-cover"
             />
 

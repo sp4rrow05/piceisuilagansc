@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
+import { UPLOADS_URL } from "../../services/api";
 
 type Officer = {
   id: number
@@ -15,8 +16,8 @@ export default function Officers() {
   const [officers, setOfficers] = useState<Officer[]>([])
 
   useEffect(() => {
-    axios
-      .get("/pice-backend/api/?module=officers&action=read")
+    api
+      .get("/?module=officers&action=read")
       .then(res => setOfficers(res.data))
   }, [])
 
@@ -37,7 +38,7 @@ export default function Officers() {
       <img
         src={
           o.photo
-            ? `/pice-backend/uploads/officers/${o.photo}`
+            ? `${UPLOADS_URL}/officers/${o.photo}`
             : placeholder
         }
         className="w-32 h-32 object-cover rounded-full mx-auto mb-3 border"

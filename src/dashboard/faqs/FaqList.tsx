@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 import Swal from "sweetalert2";
 
 type FAQ = {
@@ -20,7 +20,7 @@ export default function FaqList() {
   // refresh loader
   const loadData = async () => {
     try {
-      const res = await axios.get("/pice-backend/api/?module=faqs&action=read");
+      const res = await api.get("/?module=faqs&action=read");
 
       setData(Array.isArray(res.data) ? res.data : []);
     } catch {
@@ -32,8 +32,8 @@ export default function FaqList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=faqs&action=read",
+        const res = await api.get(
+          "/?module=faqs&action=read",
         );
 
         // 🛡 Ensure we always set an ARRAY
@@ -85,8 +85,8 @@ export default function FaqList() {
 
       const action = editingId === null ? "create" : "update";
 
-      const res = await axios.post(
-        `/pice-backend/api/?module=faqs&action=${action}`,
+      const res = await api.post(
+        `/?module=faqs&action=${action}`,
         payload,
         { withCredentials: true },
       );
@@ -120,8 +120,8 @@ export default function FaqList() {
     if (!res.isConfirmed) return;
 
     try {
-      const r = await axios.get(
-        `/pice-backend/api/?module=faqs&action=delete&id=${id}`,
+      const r = await api.get(
+        `/?module=faqs&action=delete&id=${id}`,
         { withCredentials: true },
       );
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
+import { UPLOADS_URL } from "../../services/api";
 
 export default function CELibraryCMS() {
 
@@ -8,7 +9,6 @@ export default function CELibraryCMS() {
   const [files, setFiles] = useState<any[]>([])
 
   const [current, setCurrent] = useState<number|null>(null)
-  const [path, setPath] = useState<any[]>([])
 
   const [name, setName] = useState("")
   const [search, setSearch] = useState("")
@@ -16,15 +16,15 @@ export default function CELibraryCMS() {
   const [preview, setPreview] = useState<any>(null)
 
   const loadFolders = async () => {
-    const res = await axios.get("/pice-backend/api/?module=ce&action=folders")
+    const res = await api.get("/?module=ce&action=folders")
     setFolders(res.data)
   }
 
   const loadFiles = async (id:number) => {
     setCurrent(id)
 
-    const res = await axios.get(
-      `/pice-backend/api/?module=ce&action=files&folder_id=${id}&search=${search}`
+    const res = await api.get(
+      `/?module=ce&action=files&folder_id=${id}&search=${search}`
     )
 
     setFiles(res.data)
@@ -47,7 +47,7 @@ export default function CELibraryCMS() {
     if (parent)
       fd.append("parent_id", parent)
 
-    await axios.post("/pice-backend/api/?module=ce&action=create_folder", fd)
+    await api.post("/?module=ce&action=create_folder", fd)
 
     setName("")
     loadFolders()
@@ -62,8 +62,8 @@ export default function CELibraryCMS() {
 
     if (!c.isConfirmed) return
 
-    const res = await axios.get(
-      `/pice-backend/api/?module=ce&action=delete_folder&id=${id}`
+    const res = await api.get(
+      `/?module=ce&action=delete_folder&id=${id}`
     )
 
     if (res.data.error)
@@ -85,7 +85,7 @@ export default function CELibraryCMS() {
     fd.append("folder_id", current.toString())
     fd.append("file", file)
 
-    await axios.post("/pice-backend/api/?module=ce&action=upload", fd)
+    await api.post("/?module=ce&action=upload", fd)
 
     loadFiles(current)
   }
@@ -97,8 +97,8 @@ export default function CELibraryCMS() {
 
   const delFile = async (id:number) => {
 
-    await axios.get(
-      `/pice-backend/api/?module=ce&action=delete_file&id=${id}`
+    await api.get(
+      `/?module=ce&action=delete_file&id=${id}`
     )
 
     loadFiles(current!)
@@ -192,12 +192,12 @@ export default function CELibraryCMS() {
 
       {preview.filetype==="pdf" ? (
         <iframe
-          src={`/pice-backend/uploads/ce_library/${preview.filename}`}
+          src={`${UPLOADS_URL}/ce_library/${preview.filename}`}
           className="w-full h-[80vh]"
         />
       ) : (
         <a
-          href={`/pice-backend/uploads/ce_library/${preview.filename}`}
+          href={`${UPLOADS_URL}/ce_library/${preview.filename}`}
         >Download</a>
       )}
 

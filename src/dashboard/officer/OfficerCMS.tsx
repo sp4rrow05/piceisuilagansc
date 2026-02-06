@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import api from "../../services/api";
 import Swal from "sweetalert2"
 import Pagination from "../../components/Pagination"
+import { UPLOADS_URL } from "../../services/api";
 
 type Officer = {
   id: number
@@ -36,8 +37,8 @@ export default function OfficersCMS() {
   ]
 
   const load = async () => {
-    const res = await axios.get(
-      "/pice-backend/api/?module=officers&action=read"
+    const res = await api.get(
+      "/?module=officers&action=read"
     )
 
     const list = Array.isArray(res.data) ? res.data : []
@@ -95,8 +96,8 @@ export default function OfficersCMS() {
     if (id) fd.append("id", id.toString())
     if (oldPhoto) fd.append("oldPhoto", oldPhoto)
 
-    await axios.post(
-      `/pice-backend/api/?module=officers&action=${id ? "update" : "create"}`,
+    await api.post(
+      `/?module=officers&action=${id ? "update" : "create"}`,
       fd,
       { withCredentials: true }
     )
@@ -116,8 +117,8 @@ export default function OfficersCMS() {
 
     if (!c.isConfirmed) return
 
-    await axios.get(
-      `/pice-backend/api/?module=officers&action=delete&id=${id}`,
+    await api.get(
+      `/?module=officers&action=delete&id=${id}`,
       { withCredentials: true }
     )
 
@@ -125,8 +126,8 @@ export default function OfficersCMS() {
   }
 
   const move = async (id: number, dir: "up" | "down") => {
-    await axios.get(
-      `/pice-backend/api/?module=officers&action=move&id=${id}&dir=${dir}`,
+    await api.get(
+      `/?module=officers&action=move&id=${id}&dir=${dir}`,
       { withCredentials: true }
     )
     load()
@@ -170,7 +171,7 @@ export default function OfficersCMS() {
                 <img
                   src={
                     o.photo
-                      ? `/pice-backend/uploads/officers/${o.photo}`
+                      ? `${UPLOADS_URL}/officers/${o.photo}`
                       : "/images/user-placeholder.jpg"
                   }
                   className="w-14 h-14 object-cover rounded-full border"
@@ -255,7 +256,7 @@ export default function OfficersCMS() {
 
             {oldPhoto && (
               <img
-                src={`/pice-backend/uploads/officers/${oldPhoto}`}
+                src={`${UPLOADS_URL}/officers/${oldPhoto}`}
                 className="w-24 h-24 object-cover rounded"
               />
             )}

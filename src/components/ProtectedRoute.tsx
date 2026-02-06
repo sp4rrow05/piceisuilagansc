@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
-
+import api from "../services/api";
 export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const [allowed, setAllowed] = useState<"loading" | "yes" | "no">("loading");
 
   useEffect(() => {
     const check = async () => {
       try {
-        const res = await axios.get(
-          "/pice-backend/api/?module=auth&action=me",
+        const res = await api.get(
+          "/?module=auth&action=me",
           {
             withCredentials: true,
           }
