@@ -20,7 +20,7 @@ export default function Chairman() {
   <div className="max-w-5xl mx-auto px-6 py-10 space-y-6">
 
     <h1 className="text-3xl font-bold">
-      Office of the Chairman
+      Office of the Executive Officer
     </h1>
 
     {cover && (

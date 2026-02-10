@@ -27,7 +27,6 @@ export default function Officers() {
     acc[cur.group_name].push(cur)
     return acc
   }, {})
-  console.log(groups);
   
 
   const renderCard = (o: Officer) => (
@@ -55,7 +54,7 @@ export default function Officers() {
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
 
       <h1 className="text-3xl font-bold text-pice-navy">
-        Organization Officers
+        The PICE-ISU-I SC Officers
       </h1>
 
       {/* ============ EXECUTIVE OFFICERS ============ */}

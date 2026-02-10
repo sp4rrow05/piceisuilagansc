@@ -3,13 +3,13 @@ import { useEffect, useState } from "react"
 import api from "../../services/api";
 import { UPLOADS_URL } from "../../services/api";
 
-export default function President() {
+export default function Chairperson() {
 
   const [cover, setCover] = useState("")
   const [sections, setSections] = useState<any[]>([])
 
   useEffect(() => {
-    api.get("/?module=president&action=read")
+    api.get("/?module=chairperson&action=read")
       .then(res => {
         setCover(res.data.page?.cover_image || "")
         setSections(res.data.sections || [])
@@ -20,12 +20,12 @@ export default function President() {
   <div className="max-w-5xl mx-auto px-6 py-10 space-y-6">
 
     <h1 className="text-3xl font-bold">
-      Office of the College Dean
+      Office of the Department Chairperson
     </h1>
 
     {cover && (
       <img
-        src={`${UPLOADS_URL}/president/${cover}`}
+        src={`${UPLOADS_URL}/chairperson/${cover}`}
         className="w-full rounded shadow"
       />
     )}

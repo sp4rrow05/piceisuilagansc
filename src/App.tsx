@@ -8,6 +8,7 @@ import Downloads from "./pages/Downloads";
 import FAQs from "./pages/FAQs";
 import CBL from "./pages/About/CBL";
 import Chairman from "./pages/About/Chairman";
+import Chairperson from "./pages/About/Chairperson";
 import President from "./pages/About/President";
 import Officers from "./pages/About/Officers";
 import ActionPlan from "./pages/AdminFinance/ActionPlan";
@@ -33,10 +34,12 @@ import LoginLogs from "./dashboard/LoginLogs";
 import CblUpload from "./dashboard/cbl/CblUpload";
 import PresidentCMS from "./dashboard/president/PresidentCMS";
 import ChairmanCMS from "./dashboard/chairman/ChairmanCMS";
+import ChairpersonCMS from "./dashboard/chairperson/ChairpersonCMS";
 import OfficerCMS from "./dashboard/officer/OfficerCMS";
 import ActionPlanCMS from "./dashboard/action/ActionPlanCMS";
 import FinancialReportCMS from "./dashboard/financial/FinancialCMS";
 import PublicLayout from "./layouts/PublicLayout";
+import SliderCMS from "./dashboard/slider/SliderCMS";
 
 function App() {
 
@@ -60,6 +63,7 @@ function App() {
             <Route path="/about/cbl" element={<CBL />} />
             <Route path="/about/chairman" element={<Chairman />} />
             <Route path="/about/president" element={<President />} />
+            <Route path="/about/chairperson" element={<Chairperson />} />
             <Route path="/about/officers" element={<Officers />} />
 
             <Route path="/admin-finance/action-plan" element={<ActionPlan />} />
@@ -95,11 +99,13 @@ function App() {
             <Route path="cbl" element={<CblUpload />} />
             <Route path="president" element={<PresidentCMS />} />
             <Route path="chairman" element={<ChairmanCMS />} />
+            <Route path="chairperson" element={<ChairpersonCMS />} />
             <Route path="officers" element={<OfficerCMS />} />
 
             <Route path="action-plan" element={<ActionPlanCMS />} />
             <Route path="financial" element={<FinancialReportCMS />} />
             <Route path="ce" element={<CELibraryCMS />} />
+            <Route path="slider" element={<SliderCMS />} />
 
           </Route>
         </Routes>

@@ -149,7 +149,7 @@ export default function PresidentCMS() {
     <div className="space-y-6">
 
       <h1 className="text-2xl font-bold">
-        Office of the President CMS
+        Office of the College Dean CMS
       </h1>
 
       {/* COVER */}

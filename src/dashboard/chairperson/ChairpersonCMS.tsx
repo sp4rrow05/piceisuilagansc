@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import api from "../../services/api";
 import Swal from "sweetalert2"
 import { UPLOADS_URL } from "../../services/api";
-export default function ChairmanCMS() {
+
+export default function ChairpersonCMS() {
 
   const [cover, setCover] = useState("")
   const [sections, setSections] = useState<any[]>([])
@@ -19,7 +20,7 @@ export default function ChairmanCMS() {
     const fetchData = async () => {
       try {
         const res = await api.get(
-          "/?module=chairman&action=read"
+          "/?module=chairperson&action=read"
         )
 
         setCover(res.data.page?.cover_image || "")
@@ -27,7 +28,7 @@ export default function ChairmanCMS() {
 
       } catch (err) {
         console.error(err)
-        Swal.fire("Error", "Failed to load chairman page", "error")
+        Swal.fire("Error", "Failed to load chairperson page", "error")
       }
     }
 
@@ -38,7 +39,7 @@ export default function ChairmanCMS() {
   const reload = async () => {
     try {
       const res = await api.get(
-        "/?module=chairman&action=read"
+        "/?module=chairperson&action=read"
       )
 
       setCover(res.data.page?.cover_image || "")
@@ -61,7 +62,7 @@ export default function ChairmanCMS() {
 
     try {
       await api.post(
-        "/?module=chairman&action=cover_update",
+        "/?module=chairperson&action=cover_update",
         fd,
         { withCredentials: true }
       )
@@ -89,13 +90,13 @@ export default function ChairmanCMS() {
         fd.append("id", editing.toString())
 
         await api.post(
-          "/?module=chairman&action=section_update",
+          "/?module=chairperson&action=section_update",
           fd,
           { withCredentials: true }
         )
       } else {
         await api.post(
-          "/?module=chairman&action=section_create",
+          "/?module=chairperson&action=section_create",
           fd,
           { withCredentials: true }
         )
@@ -129,7 +130,7 @@ export default function ChairmanCMS() {
   const del = async (id: number) => {
     try {
       await api.get(
-        `/?module=chairman&action=section_delete&id=${id}`,
+        `/?module=chairperson&action=section_delete&id=${id}`,
         { withCredentials: true }
       )
 
@@ -148,7 +149,7 @@ export default function ChairmanCMS() {
     <div className="space-y-6">
 
       <h1 className="text-2xl font-bold">
-        Office of the Executive Officer CMS
+        Office of the Department Chairperson
       </h1>
 
       {/* COVER */}
@@ -157,7 +158,7 @@ export default function ChairmanCMS() {
 
         {cover && (
           <img
-            src={`${UPLOADS_URL}/chairman/${cover}`}
+            src={`${UPLOADS_URL}/chairperson/${cover}`}
             className="w-full h-60 object-cover mb-3 rounded"
           />
         )}

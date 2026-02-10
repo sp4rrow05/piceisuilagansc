@@ -18,7 +18,7 @@ export default function Downloads() {
       <div className="space-y-4">
         {data.map(item => (
           <div key={item.id} className="bg-white p-4 rounded shadow flex justify-between items-center">
-            <span>{item.title}</span>
+            <span>{item.title}<br></br><p className="text-sm text-gray-500">{item.description}</p></span>
             <a
               href={`${UPLOADS_URL}/downloads/${item.file}`}
               target="_blank"

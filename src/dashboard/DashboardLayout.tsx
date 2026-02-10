@@ -13,7 +13,7 @@ import {
   NotepadText,
   Network,
   ChevronDown,
-  ChevronUp,
+  ChevronUp,Image
 } from "lucide-react";
 import { useState } from "react";
 import api from "../services/api";
@@ -36,14 +36,14 @@ export default function DashboardLayout() {
       icon: <LayoutDashboard size={18} />,
     },
     {
-      label: "Office of the President",
-      to: "/dashboard/president",
-      icon: <UserStar size={18} />,
-    },
-    {
-      label: "Office of the Chairman",
-      to: "/dashboard/chairman",
+      label: "Offices CMS",
+      to: "/dashboard/offices",
       icon: <UserRoundPen size={18} />,
+      submenu: [
+        { label: "Office of the College Dean", to: "/dashboard/president",icon: <UserStar size={12} /> },
+        { label: "Office of the Executive Officer", to: "/dashboard/chairman", icon: <UserRoundPen size={12} /> },
+        { label: "Office of the Department Chairperson", to: "/dashboard/chairperson", icon: <UserRoundPen size={12} /> },
+      ],
     },
     {
       label: "Organization Officer",
@@ -80,6 +80,11 @@ export default function DashboardLayout() {
       label: "Downloads",
       to: "/dashboard/downloads",
       icon: <Download size={18} />,
+    },
+        {
+      label: "Slider CMS",
+      to: "/dashboard/slider",
+      icon: <Image size={18} />,
     },
     { label: "FAQs", to: "/dashboard/faqs", icon: <HelpCircle size={18} /> },
   ];

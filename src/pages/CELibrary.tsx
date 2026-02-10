@@ -58,12 +58,12 @@ export default function CELibrary() {
 
     {/* BREADCRUMBS */}
     <div className="flex gap-2 items-center text-sm">
-      <span
+      {/* <span
         className="cursor-pointer text-blue-600"
         onClick={() => openFolder(null)}
       >
         Root
-      </span>
+      </span> */}
 
       {breadcrumb.map(b => (
         <span key={b.id} className="flex gap-2">
