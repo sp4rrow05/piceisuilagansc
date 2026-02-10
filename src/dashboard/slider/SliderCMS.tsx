@@ -86,6 +86,7 @@ export default function SliderCMS() {
 
     <div className="flex justify-between">
       <h1 className="text-2xl font-bold">Slider CMS</h1>
+      <p className="text-sm text-gray-500">Note: Slider images must be 1920x900 pixels</p>
 
       <button onClick={openAdd} className="btn-primary">
         ➕ Add Slide
