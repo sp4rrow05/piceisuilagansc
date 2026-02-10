@@ -129,7 +129,7 @@ export default function Slider() {
 
       </Swiper>
       {/* Overlay */} 
-      <div className="absolute inset-0 bg-gradient-to-r from-pice-navy/80 to-pice-dark/60 z-10" /> 
+      <div className="absolute inset-0 bg-gradient-to-r from-pice-navy/20 to-pice-dark/10 z-10" /> 
         {/* Text Content */} 
         <div className="absolute inset-0 z-20 flex items-center"> 
           <div className="max-w-7xl mx-auto px-6 text-white"> 
