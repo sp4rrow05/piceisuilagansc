@@ -4,7 +4,7 @@ export default function Footer() {
       <p>
         {/* © {new Date().getFullYear()} PICE – ISU Ilagan Student Chapter. All rights reserved. */}
       </p>
-      <p>For inquiries, please contact us at: <br />Email: piceisuilaganstudentchapter@gmail.com <br/>Facebook: <a href="https://www.facebook.com/piceisuisc" target="_blank" rel="noopener noreferrer" className="text-pice-gold hover:underline">PICE ISU - Ilagan Student Chapter</a></p>
+      <p>For inquiries, please contact us at: <br />Email: piceisuilaganstudchapter@gmail.com <br/>Facebook: <a href="https://www.facebook.com/piceisuisc" target="_blank" rel="noopener noreferrer" className="text-pice-gold hover:underline">PICE ISU - Ilagan Student Chapter</a></p>
     </footer>
   )
 }
